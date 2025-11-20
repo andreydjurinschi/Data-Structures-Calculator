@@ -1,60 +1,74 @@
+/*
 package org.logic.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+
 
 public class InputParser {
-    private static final List<Character> operations = List.of('+', '-', '*', '/');
-    private static final List<Character> brackets = List.of('(', ')');
+    private static final List<Character> OPERATIONS = List.of('+', '-', '*', '/', '^');
+    private static final List<Character> BRACKETS = List.of('(', ')');
+*/
+/*    private static final List<Double> NUMBERS = List.of('+', '-', '*', '/');*//*
 
-    public static void parser(String problem){
-        char[] symbols = problem.trim().toCharArray();
-        List<Double> digits = new ArrayList<>();
-        List<Character> operators = new ArrayList<>();
+
+    public static String extract(String problem){
+*/
+/*
+        String normalized = normalizeProblem(problem);
+        StringBuilder result = new StringBuilder();
+
+        List<Double> nums = new ArrayList<>();
+        List<Character> operations = new ArrayList<>();
         List<Character> brackets = new ArrayList<>();
-        List<Character> other = new  ArrayList<>();
 
-        StringBuilder numberBuffer = new StringBuilder();
+        char[] symbols = normalized.toCharArray();
+        StringBuilder numsBuilder = new StringBuilder();
 
-        for (int i = 0; i < symbols.length; i++) {
-            char s = symbols[i];
-
-            if (Character.isDigit(s) || s == '.') {
-                numberBuffer.append(s);
-            }
-            else {
-
-                if (numberBuffer.length() > 0) {
-                    digits.add(Double.parseDouble(numberBuffer.toString()));
-                    numberBuffer.setLength(0);
+        for (var c : symbols) {
+            if(Character.isDigit(c)){
+                numsBuilder.append(c);
+                result.append(c);
+            }else{
+                if(!numsBuilder.isEmpty()){
+                    nums.add(Double.parseDouble(numsBuilder.toString()));
+                    result.append(numsBuilder);
+                    numsBuilder.setLength(0);
                 }
-
-                if (operations.contains(s)) {
-                    operators.add(s);
-                } else if (InputParser.brackets.contains(s)) {
-                    brackets.add(s);
-                } else if (!Character.isWhitespace(s)) {
-                    other.add(s);
+                if(OPERATIONS.contains(c)){
+                    operations.add(c);
+                }
+                else if(BRACKETS.contains(c)){
+                    brackets.add(c);
                 }
             }
         }
-
-        if (!numberBuffer.isEmpty()) {
-            digits.add(Double.parseDouble(numberBuffer.toString()));
+        if(!numsBuilder.isEmpty()){
+            nums.add(Double.parseDouble(numsBuilder.toString()));
         }
+            Response.printNums(nums);
+            Response.printOperations(operations);
+            Response.printBrackets(brackets);
 
-        Response.printOutput(problem);
-        Response.printNums(digits);
-        Response.printOperations(operators);
-        Response.printBrackets(brackets);
-
-        if (!other.isEmpty()){
-            System.out.print("Unknown chars: ");
-            other.forEach(o -> System.out.print(o + " "));
-        }
+            return normalized;
     }
 
+    private static String normalizeProblem(String problem){
+        StringBuilder normalized = new StringBuilder();
+        for(int i =  0; i < problem.length(); i++){
+            if(OPERATIONS.contains(problem.charAt(i)) || BRACKETS.contains(problem.charAt(i)) || Character.isDigit(problem.charAt(i))){
+                normalized.append(problem.charAt(i));
+            }else{
+                if(!Character.isWhitespace(problem.charAt(i))){
+                    System.out.println("Unrecognized character: " +  problem.charAt(i));
+                }
+            }
+        }
+        System.out.println("Normalized: " + normalized);
+        return normalized.toString();
+    }*//*
 
 
 }
+*/
