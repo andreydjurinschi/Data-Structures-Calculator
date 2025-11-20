@@ -1,13 +1,8 @@
 package org.logic;
 
-
-import org.logic.utils.InputParser;
-
 public class Main {
     public static void main(String[] args) {
-        String expression = "(33 + 4) * 2";
-        Calculator calculator = new Calculator();
-        calculator.calculate(expression);
-
+        String expression = "11 + 18 * ( 20 - 2 + ( 15 - 9 ) )";
+        System.out.println(Calculator.calculate(expression));
     }
 }

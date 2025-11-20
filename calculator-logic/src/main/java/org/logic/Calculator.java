@@ -1,96 +1,46 @@
 package org.logic;
 
+import org.logic.utils.RPNConverter;
 
-import org.logic.utils.InputParser;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 public class Calculator {
+    public static double calculate(String expression) {
+        expression = RPNConverter.convert(expression);
+        String[] elems =  expression.split(" ");
+        Stack<Double> stack = new Stack<>();
 
-    private final char[] OPERATORS = {'+', '-', '*', '/', '^'};
-    private final char[] BRACKETS = {'(', ')'};
-
-    public void calculate(String expression){
-        String normalized = InputParser.extract(expression);
-
-        // List<Double> nums = new ArrayList<>();
-        StringBuilder builder = new StringBuilder();
-
-        Stack<Character> stack = new Stack<>();
-        Stack<Double> numbers = new Stack<>();
-
-        for(var c : normalized.toCharArray()){
-            if(Character.isDigit(c)){
-                builder.append(c);
-        //        nums.add(Double.parseDouble(builder.toString()));
-            }else{
-                if(!builder.isEmpty()){
-                    numbers.push(Double.parseDouble(builder.toString()));
-                    builder.setLength(0);
-                }else {
-                    switch (c){
-                        case '+' -> {
-                            stack.push('+');
-                            numbers.push(numbers.pop() + numbers.pop());
-                        }
-                        case '-' -> {
-                            stack.push('-');
-                            numbers.push(numbers.pop() - numbers.pop());
-                        }
-                        case '*' -> {
-                            stack.push('*');
-                            numbers.push(numbers.pop() * numbers.pop());
-                        }
-                        case '/' -> {
-                            stack.push('/');
-                            numbers.push(numbers.pop() / numbers.pop());
-                        }
-                        case '^' -> {
-                            stack.push('^');
-                            numbers.push(Math.pow(numbers.pop(), numbers.pop()));
-                        }
-                    }
+        for (String elem : elems) {
+            switch (elem) {
+                case "+" -> {
+                    stack.push(stack.pop() + stack.pop());
+                }
+                case "-" -> {
+                    double sec =  stack.pop();
+                    double prev = stack.pop();
+                    stack.push(prev - sec);
+                }
+                case "*" -> {
+                    stack.push(stack.pop() * stack.pop());
+                }
+                case "/" -> {
+                    double sec =  stack.pop();
+                    double prev = stack.pop();
+                    stack.push(prev / sec);
+                }
+/*                case "(", ")" -> {
+                    stack.pop();
+                }*/
+                default -> {
+                    stack.push(Double.parseDouble(elem));
                 }
             }
         }
-
-        System.out.println(numbers.peek());
-
-        if(!builder.isEmpty()){
-            numbers.push(Double.parseDouble(builder.toString()));
-         //   builder.setLength(0);
-        }
-
+        return stack.pop();
     }
 
-
-    private boolean isOperator(char ch){
-        for (var c : OPERATORS){
-            if (c == ch){
-                return true;
-            }
-        }
-        return false;
+    private static boolean isNumeric(String op) {
+        return op.matches("-?\\d+");
     }
-
-    private boolean isBracket(char ch){
-        for (var c : BRACKETS){
-            if (c == ch){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public char[] getOperators() {
-        return OPERATORS;
-    }
-
-    public char[] getBRACKETS() {
-        return BRACKETS;
-    }
-
 }
 
