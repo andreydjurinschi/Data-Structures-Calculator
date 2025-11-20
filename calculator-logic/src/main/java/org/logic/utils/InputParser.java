@@ -1,4 +1,3 @@
-/*
 package org.logic.utils;
 
 import java.util.ArrayList;
@@ -9,13 +8,10 @@ import java.util.List;
 public class InputParser {
     private static final List<Character> OPERATIONS = List.of('+', '-', '*', '/', '^');
     private static final List<Character> BRACKETS = List.of('(', ')');
-*/
-/*    private static final List<Double> NUMBERS = List.of('+', '-', '*', '/');*//*
+
 
 
     public static String extract(String problem){
-*/
-/*
         String normalized = normalizeProblem(problem);
         StringBuilder result = new StringBuilder();
 
@@ -50,7 +46,7 @@ public class InputParser {
             Response.printNums(nums);
             Response.printOperations(operations);
             Response.printBrackets(brackets);
-
+        System.out.println();
             return normalized;
     }
 
@@ -67,8 +63,7 @@ public class InputParser {
         }
         System.out.println("Normalized: " + normalized);
         return normalized.toString();
-    }*//*
+    }
 
 
 }
-*/
