@@ -24,7 +24,7 @@ public class Normalizer {
             result.append(matcher.group()).append(" ");
         }
 
-        Validator.validateOperatorsCount(result.toString());
+        Validator.validate(result.toString());
         log.info("Normalizer result: " + result.toString());
         return result.toString();
     }

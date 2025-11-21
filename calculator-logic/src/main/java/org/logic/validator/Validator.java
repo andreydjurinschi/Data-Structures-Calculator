@@ -2,43 +2,58 @@ package org.logic.validator;
 
 import org.logic.exceptions.IllegalSymbolException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Validator {
 
-    private static final Set<String> operators;
-    private static final Set<String> braces;
+    private static final Set<String> OPERATORS;
+    private static final Set<String> BRACES;
 
     static {
-        operators = Set.of("+", "-", "/", "*", "^");
-        braces = Set.of("(", ")");
+        OPERATORS = Set.of("+", "-", "/", "*", "^");
+        BRACES = Set.of("(", ")");
+    }
+
+    public static void validate(String expression) throws IllegalSymbolException {
+        if (!validateBraces(expression)) {
+            throw new IllegalSymbolException("Mismatched parentheses");
+        }
+        if (!validateOperatorsCount(expression)) {
+            throw new IllegalSymbolException("Incorrect number of operators or operands");
+        }
     }
 
 
-    public static void validateOperatorsCount(String exp) throws IllegalSymbolException {
+    private static boolean validateOperatorsCount(String exp){
         String[] symbols = exp.split(" ");
         int numsCount = 0;
         int operatorsCount = 0;
-        int bracesCount = 0;
         for(var s : symbols){
             if(s.matches("-?\\d*\\.?\\d+")){
                 numsCount++;
-            } else if (operators.contains(s)) {
+            } else if (OPERATORS.contains(s)) {
                 operatorsCount++;
-            } else if (braces.contains(s)) {
-                bracesCount++;
             }
         }
-        if(bracesCount % 2 != 0){
-            throw new IllegalSymbolException("Invalid braces count...");
-        }
-        if(numsCount - 1 != operatorsCount){
-            throw new IllegalSymbolException("Invalid operators or numbers count...");
-        }
+
+        return numsCount - 1 == operatorsCount;
     }
+
+    private static boolean validateBraces(String exp) {
+        Stack<String> temp = new Stack<>();
+        String[] symbols = exp.split(" ");
+
+        for(var s : symbols){
+            if(s.equals("(")){
+                temp.push(s);
+            } else if(s.equals(")")){
+                if(temp.isEmpty()) return false;
+                temp.pop();
+            }
+        }
+        return temp.isEmpty();
+    }
+
 
     public static void main(String[] ar){
 

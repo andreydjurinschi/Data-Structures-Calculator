@@ -6,7 +6,7 @@ import org.logic.utils.Calculator;
 public class Main {
     public static void main(String[] args) {
 
-        String expression = "5 ^ 2 - 19 ";
+        String expression = "5 / 0 ";
         try {
             System.out.println(Calculator.calculate(expression));
         } catch (IllegalSymbolException e) {

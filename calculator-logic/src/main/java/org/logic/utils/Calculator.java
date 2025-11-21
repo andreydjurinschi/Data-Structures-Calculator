@@ -33,7 +33,11 @@ public class Calculator {
                 case "/" -> {
                     double sec =  stack.pop();
                     double prev = stack.pop();
-                    stack.push(prev / sec);
+                    double result = prev / sec;
+
+                    if(Double.isInfinite(result) || Double.isNaN(result)){
+                        throw new ArithmeticException("Dividing by zero is very bad");
+                    }
                 }
                 case "^" -> {
                     double sec = stack.pop();
