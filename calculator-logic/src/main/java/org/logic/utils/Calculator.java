@@ -1,13 +1,20 @@
-package org.logic;
+package org.logic.utils;
 
-import org.logic.utils.RPNConverter;
+import org.logic.exceptions.IllegalSymbolException;
 
 import java.util.Stack;
+import java.util.logging.Logger;
 
 public class Calculator {
-    public static double calculate(String expression) {
+    private static final Logger log = Logger.getLogger(Calculator.class.getName());
+
+    public static double calculate(String expression) throws IllegalSymbolException {
         expression = RPNConverter.convert(expression);
+
+        log.info("Calculator called, caught data: " + expression);
+
         String[] elems =  expression.split(" ");
+
         Stack<Double> stack = new Stack<>();
 
         for (String elem : elems) {
@@ -28,19 +35,18 @@ public class Calculator {
                     double prev = stack.pop();
                     stack.push(prev / sec);
                 }
-/*                case "(", ")" -> {
-                    stack.pop();
-                }*/
-                default -> {
-                    stack.push(Double.parseDouble(elem));
+                case "^" -> {
+                    double sec = stack.pop();
+                    double prev = stack.pop();
+                    stack.push(Math.pow(prev, sec));
                 }
+
+                default -> stack.push(Double.parseDouble(elem));
             }
         }
+        log.info("Calculator result: " + stack.peek());
         return stack.pop();
     }
 
-    private static boolean isNumeric(String op) {
-        return op.matches("-?\\d+");
-    }
 }
 
