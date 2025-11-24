@@ -38,6 +38,8 @@ public class Calculator {
                     if(Double.isInfinite(result) || Double.isNaN(result)){
                         throw new ArithmeticException("Dividing by zero is very bad");
                     }
+
+                    stack.push(result);
                 }
                 case "^" -> {
                     double sec = stack.pop();

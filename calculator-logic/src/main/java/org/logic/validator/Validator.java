@@ -18,9 +18,16 @@ public class Validator {
         if (!validateBraces(expression)) {
             throw new IllegalSymbolException("Mismatched parentheses");
         }
+        if (!validateCharSequence(expression)) {
+            throw new IllegalSymbolException("Only numbers or operators required!");
+        }
         if (!validateOperatorsCount(expression)) {
             throw new IllegalSymbolException("Incorrect number of operators or operands");
         }
+    }
+
+    private static boolean validateCharSequence(String exp){
+        return !exp.matches("[a-zA-Z]+");
     }
 
 
@@ -54,8 +61,4 @@ public class Validator {
         return temp.isEmpty();
     }
 
-
-    public static void main(String[] ar){
-
-    }
 }
