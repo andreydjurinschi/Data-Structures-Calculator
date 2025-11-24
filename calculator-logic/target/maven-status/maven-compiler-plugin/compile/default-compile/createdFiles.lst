@@ -1,0 +1,6 @@
+org\logic\exceptions\IllegalSymbolException.class
+org\logic\utils\Calculator.class
+org\logic\utils\RPNConverter.class
+org\logic\Main.class
+org\logic\validator\Validator.class
+org\logic\normalizer\Normalizer.class
