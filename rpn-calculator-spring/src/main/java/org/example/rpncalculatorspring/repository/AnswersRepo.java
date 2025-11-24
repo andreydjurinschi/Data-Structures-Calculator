@@ -1,9 +1,13 @@
-package org.logic.repo;
+package repository;
 
-import org.logic.database.DbConnector;
+
+
+import database.DbConnector;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
+@Repository
 public class AnswersRepo {
     public static void createAnswer(String value, Long expressionId){
         try(Connection conn = DbConnector.openConnection();

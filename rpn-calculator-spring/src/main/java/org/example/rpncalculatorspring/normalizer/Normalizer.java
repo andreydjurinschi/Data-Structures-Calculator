@@ -1,9 +1,9 @@
-package org.logic.normalizer;
+package normalizer;
 
 
 
-import org.logic.exceptions.IllegalSymbolException;
-import org.logic.validator.Validator;
+import exceptions.IllegalSymbolException;
+import validator.Validator;
 
 import java.util.logging.Logger;
 import java.util.regex.Matcher;

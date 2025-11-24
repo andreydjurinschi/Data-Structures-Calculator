@@ -1,8 +1,11 @@
-package org.logic.validator;
+package validator;
 
-import org.logic.exceptions.IllegalSymbolException;
 
-import java.util.*;
+
+import exceptions.IllegalSymbolException;
+
+import java.util.Set;
+import java.util.Stack;
 
 public class Validator {
 

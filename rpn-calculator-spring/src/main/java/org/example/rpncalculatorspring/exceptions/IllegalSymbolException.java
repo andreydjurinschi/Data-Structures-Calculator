@@ -1,4 +1,4 @@
-package org.logic.exceptions;
+package exceptions;
 
 public class IllegalSymbolException extends Exception {
     public IllegalSymbolException(String message) {

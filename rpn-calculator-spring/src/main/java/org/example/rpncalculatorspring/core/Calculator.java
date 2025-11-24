@@ -1,8 +1,9 @@
-package org.logic.utils;
+package core;
 
-import org.logic.exceptions.IllegalSymbolException;
-import org.logic.repo.AnswersRepo;
-import org.logic.repo.ProblemsRepo;
+
+import exceptions.IllegalSymbolException;
+import repository.AnswersRepo;
+import repository.ProblemsRepo;
 
 import java.util.Stack;
 import java.util.logging.Logger;

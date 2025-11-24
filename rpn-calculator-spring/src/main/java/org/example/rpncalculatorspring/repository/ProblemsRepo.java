@@ -1,11 +1,19 @@
-package org.logic.repo;
+package repository;
 
-import org.logic.database.DbConnector;
+
+import database.DbConnector;
+import entity.Problem;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@Repository
 public class ProblemsRepo {
-    public static void createProblem(String expression){
+    public void createProblem(String expression){
         try(Connection conn = DbConnector.openConnection()){
             PreparedStatement statement = conn.prepareStatement("insert into problems(expression) values (?)");
             statement.setString(1, expression);
@@ -15,19 +23,21 @@ public class ProblemsRepo {
         }
     }
 
-    public static void history(){
+    public void history(){
         try(Connection conn = DbConnector.openConnection()){
             Statement statement = conn.createStatement();
             ResultSet set = statement.executeQuery("select p.expression from problems p ");
             while(set.next()){
-                System.out.println(set.getString("expression"));
+                //System.out.println(set.getString("expression"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void getLastThreeProblems(){
+    public Map<String,String> getLastThreeProblems(){
+        Map<String, String> result = new HashMap<>();
+
         try(Connection conn = DbConnector.openConnection();
             Statement statement = conn.createStatement();
             ResultSet set = statement.executeQuery("select p.expression, a.value as answer from problems p" +
@@ -35,11 +45,12 @@ public class ProblemsRepo {
                     " order by p.id desc limit 3 ");
         ){
             while(set.next()){
-                System.out.println(set.getString("expression") + " = " + set.getString("answer"));
+                result.put(set.getString("expression") + " = ", set.getString("answer"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return result;
     }
 
     public static Long getProblemId(String expression){

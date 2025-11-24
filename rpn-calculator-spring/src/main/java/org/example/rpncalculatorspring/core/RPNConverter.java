@@ -1,10 +1,10 @@
-package org.logic.utils;
+package core;
 
 
-import org.logic.exceptions.IllegalSymbolException;
-import org.logic.normalizer.Normalizer;
 
-import java.util.Arrays;
+import exceptions.IllegalSymbolException;
+import normalizer.Normalizer;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -64,38 +64,3 @@ public class RPNConverter {
     }
 
 }
-
-/**
- *         log.info("RPN converter called, caught data: " + expression);
- *
- *         expression = Normalizer.normalize(expression);
- *         String[] elems = expression.split(" ");
- *         Stack<String> operatorsStack = new Stack<>();
- *         StringBuilder result = new StringBuilder();
- *
- *         for(var elem : elems){
- *             if(elem.matches("-?\\d*\\.?\\d+")){
- *                 result.append(elem).append(" ");
- *             } else if (elem.equals("(")) {
- *                 operatorsStack.push(elem);
- *             } else if (elem.equals(")")) {
- *                 while (!operatorsStack.empty() && !operatorsStack.peek().equals("(")){
- *                     result.append(operatorsStack.pop()).append(" ");
- *                 }
- *                 operatorsStack.pop();
- *             } else if (priority.containsKey(elem)) {
- *                 while(!operatorsStack.empty() &&
- *                         !operatorsStack.peek().equals("(")
- *                         && priority.get(operatorsStack.peek()) >= priority.get(elem)
- *                 ){
- *                     result.append(operatorsStack.pop()).append(" ");
- *                 }
- *                 operatorsStack.push(elem);
- *             }
- *         }
- *         while(!operatorsStack.empty()){
- *             result.append(operatorsStack.pop()).append(" ");
- *         }
- *         log.info("RPN converter result: " + result);
- *         return result.toString();
- */
